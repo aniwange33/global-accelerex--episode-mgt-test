@@ -8,16 +8,16 @@ import java.util.ArrayList;
 
 @Data
 public class CharacterDomain {
-    Long id;
-    String name;
-    String status;
-    String species;
-    String type;
-    String gender;
-    Origin OriginObject;
-    Location LocationObject;
-    String image;
-    ArrayList<String> episode = new ArrayList<String>();
-    String url;
-    String created;
+    public Long id;
+    public String name;
+    public String status;
+    public String species;
+    public String type;
+    public String gender;
+    public Origin origin;
+    public Location location;
+    public String image;
+    public ArrayList<String> episode = new ArrayList<String>();
+    public String url;
+    public String created;
 }

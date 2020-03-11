@@ -3,7 +3,7 @@ package com.amos.amos.global.accelerex.infrastructure;
 import com.amos.amos.global.accelerex.Usecase.api.GetApplicationData;
 import com.amos.amos.global.accelerex.Usecase.api.impl.ApplicationPropertyConfig;
 import com.amos.amos.global.accelerex.domain.model.CharacterApiResponse;
-import com.amos.amos.global.accelerex.domain.model.EpisodeApiResponse;
+import com.amos.amos.global.accelerex.infrastructure.persistence.dao.CharacterEntityDaoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -15,11 +15,13 @@ import org.springframework.stereotype.Component;
 public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
      private final GetApplicationData getApplicationData ;
      private final ApplicationPropertyConfig applicationPropertyConfig;
+     private final CharacterEntityDaoService characterEntityDaoService;
 
      @Autowired
-    public DataLoader(GetApplicationData getApplicationData, ApplicationPropertyConfig applicationPropertyConfig) {
+    public DataLoader(GetApplicationData getApplicationData, ApplicationPropertyConfig applicationPropertyConfig, CharacterEntityDaoService characterEntityDaoService) {
         this.getApplicationData = getApplicationData;
          this.applicationPropertyConfig = applicationPropertyConfig;
+         this.characterEntityDaoService = characterEntityDaoService;
      }
 
     @Override
@@ -30,14 +32,17 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 //        }
 //        log.info("total episodes size, {}", episodeData.results.size());
 //
-//        CharacterApiResponse  characterData  = getApplicationData
-//                .getCharacterData(applicationPropertyConfig.characters);
-//        for(int i = 2; i<=25; i++){
-//            characterData.results
-//                    .addAll(getApplicationData
-//                            .getCharacterData(applicationPropertyConfig.characters+"/?page="+i).results);
-//        }
-//        log.info("total character size, {}", characterData.results.size());
-//    }
+        if (characterEntityDaoService.countCharacters() == 0) {
+            CharacterApiResponse characterData = getApplicationData
+                    .getCharacterData(applicationPropertyConfig.characters);
+            for (int i = 2; i <= characterData.info.pages; i++) {
+                characterData.results
+                        .addAll(getApplicationData
+                                .getCharacterData(applicationPropertyConfig.characters + "/?page=" + i).results);
+            }
+           characterData.results.forEach(characterEntityDaoService::createNewCharacter);
+            log.info("total character size, {}", characterData.results.size());
+        }
     }
+
 }

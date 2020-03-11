@@ -7,9 +7,11 @@ import java.util.ArrayList;
 
 @Data
 public class EpisodeDomain {
-    Long id;
-    String name;
-    String air_date;
-    String episode;
-    ArrayList<String> characters = new ArrayList<String>();
+    public  Long id;
+    public String name;
+    public String air_date;
+    public String episode;
+    public String created;
+    public String url;
+    public ArrayList<String> characters = new ArrayList<String>();
 }

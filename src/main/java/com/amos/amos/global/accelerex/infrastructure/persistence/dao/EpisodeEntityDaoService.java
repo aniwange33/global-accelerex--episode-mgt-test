@@ -2,14 +2,19 @@ package com.amos.amos.global.accelerex.infrastructure.persistence.dao;
 
 import com.amos.amos.global.accelerex.domain.EpisodeDomain;
 import com.amos.amos.global.accelerex.infrastructure.persistence.EpisodeEntity;
+import org.springframework.data.domain.Pageable;
 
-import java.awt.print.Pageable;
+
 import java.util.List;
+import java.util.Optional;
 
 public interface EpisodeEntityDaoService {
-    EpisodeEntity createNewEpisodeEntity(EpisodeDomain episodeDomain);
+
+    void createNewEpisodeEntity(EpisodeDomain episodeDomain);
 
     Long countEpisodeEntity();
 
-    List<EpisodeEntity> selectAllEpisodeEntity(Pageable pageable);
+    Optional<EpisodeEntity> selectEpisodeEntityByEpisodeId(Long episodeId);
+
+    List<EpisodeEntity> selectAllEpisodeEntity();
 }

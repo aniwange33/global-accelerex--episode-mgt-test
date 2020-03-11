@@ -16,12 +16,12 @@ public class EpisodeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-    Long episodeId;
-    String name;
-    String airDate;
-    String episode;
-    String url;
-    String created;
+    public Long episodeId;
+    public String name;
+    public String airDate;
+    public String episode;
+    public String url;
+    public String created;
     @OneToMany
-    List<CharacterEntity> characters = new ArrayList<>();
+    public List<CharacterEntity> characters = new ArrayList<>();
 }
