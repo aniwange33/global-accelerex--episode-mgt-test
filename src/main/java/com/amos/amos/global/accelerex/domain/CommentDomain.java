@@ -6,4 +6,6 @@ import lombok.Data;
 public class CommentDomain {
     Long id;
     String comment;
+    String ipAddress;
+    String created;
 }

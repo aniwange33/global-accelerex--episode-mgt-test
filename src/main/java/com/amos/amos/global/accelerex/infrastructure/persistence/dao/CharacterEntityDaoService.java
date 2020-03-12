@@ -6,6 +6,7 @@ import com.amos.amos.global.accelerex.infrastructure.persistence.CharacterEntity
 import java.util.List;
 import java.util.Optional;
 
+
 public interface CharacterEntityDaoService {
 
     void createNewCharacter(CharacterDomain characterDomain);

@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import java.sql.Timestamp;
 
 @Getter
@@ -15,12 +14,11 @@ import java.sql.Timestamp;
 public class CommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long  id;
-    @Max(500)
-    String comment;
-    String ip;
-    Timestamp dateCreated;
-    @ManyToOne(optional = false)
+    public Long id;
+    public String comment;
+    public String ipAddress;
+    public Timestamp dateCreated;
+    @ManyToOne()
     EpisodeEntity episodeEntity;
 
 }

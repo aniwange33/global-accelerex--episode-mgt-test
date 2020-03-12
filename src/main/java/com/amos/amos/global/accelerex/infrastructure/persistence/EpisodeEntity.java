@@ -22,6 +22,6 @@ public class EpisodeEntity {
     public String episode;
     public String url;
     public String created;
-    @OneToMany
+    @ManyToMany
     public List<CharacterEntity> characters = new ArrayList<>();
 }
