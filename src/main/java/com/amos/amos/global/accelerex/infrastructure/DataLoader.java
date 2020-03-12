@@ -1,6 +1,6 @@
 package com.amos.amos.global.accelerex.infrastructure;
 
-import com.amos.amos.global.accelerex.Usecase.api.GetApplicationData;
+import com.amos.amos.global.accelerex.Usecase.api.ApplicationDataUseCase;
 import com.amos.amos.global.accelerex.Usecase.api.impl.ApplicationPropertyConfig;
 import com.amos.amos.global.accelerex.domain.model.CharacterApiResponse;
 import com.amos.amos.global.accelerex.domain.model.EpisodeApiResponse;
@@ -16,13 +16,13 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
-    private final GetApplicationData getApplicationData;
+    private final ApplicationDataUseCase getApplicationData;
     private final ApplicationPropertyConfig applicationPropertyConfig;
     private final EpisodeEntityDaoService episodeEntityDaoService;
     private final CharacterEntityDaoService characterEntityDaoService;
 
     @Autowired
-    public DataLoader(GetApplicationData getApplicationData,
+    public DataLoader(ApplicationDataUseCase getApplicationData,
                       ApplicationPropertyConfig applicationPropertyConfig,
                       EpisodeEntityDaoService episodeEntityDaoService,
                       @Qualifier("realData") CharacterEntityDaoService characterEntityDaoService) {

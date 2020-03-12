@@ -1,6 +1,6 @@
 package com.amos.amos.global.accelerex.Usecase.api.impl;
 
-import com.amos.amos.global.accelerex.Usecase.api.GetApplicationData;
+import com.amos.amos.global.accelerex.Usecase.api.ApplicationDataUseCase;
 import com.amos.amos.global.accelerex.domain.model.CharacterApiResponse;
 import com.amos.amos.global.accelerex.domain.model.EpisodeApiResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ import javax.inject.Named;
 
 @Named
 @Slf4j
-public class GetApplicationDataImpl implements GetApplicationData {
+public class GetApplicationDataImpl implements ApplicationDataUseCase {
     private final RestTemplate restTemplate;
 
     @Autowired
