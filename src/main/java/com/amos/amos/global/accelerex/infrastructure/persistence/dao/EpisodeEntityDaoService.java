@@ -2,8 +2,6 @@ package com.amos.amos.global.accelerex.infrastructure.persistence.dao;
 
 import com.amos.amos.global.accelerex.domain.EpisodeDomain;
 import com.amos.amos.global.accelerex.infrastructure.persistence.EpisodeEntity;
-import org.springframework.data.domain.Pageable;
-
 
 import java.util.List;
 import java.util.Optional;
