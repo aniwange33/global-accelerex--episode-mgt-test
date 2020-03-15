@@ -10,6 +10,7 @@ import com.amos.amos.global.accelerex.domain.model.CharacterCommand;
 import com.amos.amos.global.accelerex.domain.model.EpisodeCommand;
 import com.amos.amos.global.accelerex.infrastructure.persistence.enumeration.Gender;
 import com.amos.amos.global.accelerex.infrastructure.persistence.enumeration.Status;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class EpisodeUseCaseImpl implements EpisodeUseCase {
 
     private final DomainServiceGateway applicationDomainGateway;
@@ -114,7 +116,8 @@ public class EpisodeUseCaseImpl implements EpisodeUseCase {
             System.out.println(Gender.valueOf(gender).getName());
             return true;
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+            log.info(" {}", "wrong filter parameter " + gender);
+            // e.printStackTrace();
         }
         return false;
     }
@@ -125,18 +128,19 @@ public class EpisodeUseCaseImpl implements EpisodeUseCase {
             System.out.println(Status.valueOf(status).getName());
             return true;
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+            log.info(" {}", "wrong filter parameter " + status);
+            // e.printStackTrace();
         }
         return false;
     }
 
     private boolean isSortParameterEnum(String sort) {
         try {
-            System.out.println(SortParameter.valueOf(sort).getName());
             SortParameter.valueOf(sort);
             return true;
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+            // e.printStackTrace();
+            log.info(" {}", "wrong sort parameter " + sort);
         }
         return false;
     }

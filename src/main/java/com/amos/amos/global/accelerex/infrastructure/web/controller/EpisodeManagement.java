@@ -6,6 +6,7 @@ import com.amos.amos.global.accelerex.domain.CommentDomain;
 import com.amos.amos.global.accelerex.domain.model.EpisodeCommand;
 import com.amos.amos.global.accelerex.infrastructure.web.model.ApplicationApiResponse;
 import com.amos.amos.global.accelerex.infrastructure.web.model.CommentRequest;
+import io.swagger.annotations.ApiOperation;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,8 @@ public class EpisodeManagement {
         return ResponseEntity.ok(response);
     }
 
+    @ApiOperation(value = "List  characters of an episode", notes = "accepted sort term are: [name, gender or species] " +
+            "and filter term are [male, female, alive, dead, unknown] ")
     @GetMapping("{episodeId}/characters")
     public ResponseEntity<ApplicationApiResponse<CharacterCommandResponse>> listCharactersOfAnEpisode(
             @PathVariable("episodeId") Long episodeId,
@@ -37,7 +40,10 @@ public class EpisodeManagement {
             @RequestParam(value = "filterTerm", required = true) String filterTerm) {
         val response = new ApplicationApiResponse<CharacterCommandResponse>("success");
         response.data =
-                episodeUseCase.getCharactersOfAnEpisode(episodeId, sortTerm, filterTerm);
+                episodeUseCase.getCharactersOfAnEpisode(
+                        episodeId,
+                        sortTerm.toUpperCase(),
+                        filterTerm.toUpperCase());
         return ResponseEntity.ok(response);
     }
 
