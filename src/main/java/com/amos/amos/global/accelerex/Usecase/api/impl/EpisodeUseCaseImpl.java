@@ -11,6 +11,7 @@ import com.amos.amos.global.accelerex.domain.model.EpisodeCommand;
 import com.amos.amos.global.accelerex.infrastructure.persistence.enumeration.Gender;
 import com.amos.amos.global.accelerex.infrastructure.persistence.enumeration.Status;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -44,17 +45,17 @@ public class EpisodeUseCaseImpl implements EpisodeUseCase {
         if (!isSortParameterEnum(sortParameter)) throw new InValidRequest("Invalid sort parameter");
         List<CharacterCommand> characterCommands = applicationDomainGateway.listEpisodeCharacters(episodeId);
         if (isGender(filter)) {
-            final var filterList = characterCommands.stream()
+            final val filterList = characterCommands.stream()
                     .filter(characterCommand -> characterCommand.gender.equalsIgnoreCase(filter))
                     .collect(Collectors.toList());
             if (SortParameter.GENDER.getName().equalsIgnoreCase(sortParameter)) {
-                final var sortedList = filterList.stream()
+                final val sortedList = filterList.stream()
                         .sorted(Comparator.comparing(CharacterCommand::getGender))
                         .collect(Collectors.toList());
                 return new CharacterCommandResponse(sortedList, sortedList.size());
             }
             if (SortParameter.NAME.getName().equalsIgnoreCase(sortParameter)) {
-                final var sortedList = filterList.stream()
+                final val sortedList = filterList.stream()
                         .sorted(Comparator.comparing(CharacterCommand::getName))
                         .collect(Collectors.toList());
                 return new CharacterCommandResponse(sortedList, sortedList.size());
@@ -66,23 +67,23 @@ public class EpisodeUseCaseImpl implements EpisodeUseCase {
                 return new CharacterCommandResponse(sortedList, sortedList.size());
             }
         } else {
-            final var filterList = characterCommands.stream()
+            final val filterList = characterCommands.stream()
                     .filter(characterCommand -> characterCommand.status.equalsIgnoreCase(filter))
                     .collect(Collectors.toList());
             if (SortParameter.GENDER.getName().equalsIgnoreCase(sortParameter)) {
-                var sortedList = filterList.stream()
+                val sortedList = filterList.stream()
                         .sorted(Comparator.comparing(CharacterCommand::getGender).reversed())
                         .collect(Collectors.toList());
                 return new CharacterCommandResponse(sortedList, sortedList.size());
             }
             if (SortParameter.NAME.getName().equalsIgnoreCase(sortParameter)) {
-                var sortedList = filterList.stream()
+                val sortedList = filterList.stream()
                         .sorted(Comparator.comparing(CharacterCommand::getName))
                         .collect(Collectors.toList());
                 return new CharacterCommandResponse(sortedList, sortedList.size());
             }
             if (SortParameter.SPECIES.getName().equalsIgnoreCase(sortParameter)) {
-                var sortedList = filterList.stream()
+                val sortedList = filterList.stream()
                         .sorted(Comparator.comparing(CharacterCommand::getSpecies).reversed())
                         .collect(Collectors.toList());
                 return new CharacterCommandResponse(sortedList, sortedList.size());
@@ -113,11 +114,9 @@ public class EpisodeUseCaseImpl implements EpisodeUseCase {
     private boolean isGender(String gender) {
         try {
             Gender.valueOf(gender);
-            System.out.println(Gender.valueOf(gender).getName());
             return true;
         } catch (IllegalArgumentException e) {
             log.info(" {}", "wrong filter parameter " + gender);
-            // e.printStackTrace();
         }
         return false;
     }
@@ -125,11 +124,9 @@ public class EpisodeUseCaseImpl implements EpisodeUseCase {
     private boolean isStatus(String status) {
         try {
             Status.valueOf(status);
-            System.out.println(Status.valueOf(status).getName());
             return true;
         } catch (IllegalArgumentException e) {
             log.info(" {}", "wrong filter parameter " + status);
-            // e.printStackTrace();
         }
         return false;
     }
@@ -139,7 +136,6 @@ public class EpisodeUseCaseImpl implements EpisodeUseCase {
             SortParameter.valueOf(sort);
             return true;
         } catch (IllegalArgumentException e) {
-            // e.printStackTrace();
             log.info(" {}", "wrong sort parameter " + sort);
         }
         return false;
